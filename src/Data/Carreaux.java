@@ -13,7 +13,7 @@ import Jeu.Compagnie;
 import Jeu.Gare;
 import Jeu.Monopoly;
 import Jeu.ProprieteAConstruire;
-import Ui.Interface;
+import Ui.Texte;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -57,7 +57,7 @@ public class Carreaux {
 		try {
 		    numero = Integer.parseInt(data.get(i)[1]);
 		} catch(Exception e) {
-		    Interface.printerr("Impossible de récupérer un numéro de case correct");
+		    Texte.printerr("Impossible de récupérer un numéro de case correct");
 		    e.printStackTrace();
 		}
 
@@ -70,7 +70,7 @@ public class Carreaux {
 		    try {
                         prixAchat = Integer.parseInt(data.get(i)[4]);
 		    } catch(Exception e) {
-			Interface.printerr("Impossible de récupérer un prix de loyer correct");
+			Texte.printerr("Impossible de récupérer un prix de loyer correct");
 			e.printStackTrace();
 		    }
                     
@@ -96,7 +96,7 @@ public class Carreaux {
 		    try {
 			prixAchat = Integer.parseInt(data.get(i)[3]);
 		    } catch(Exception e) {
-			Interface.printerr("Impossible de récupérer un prix de loyer correct");
+			Texte.printerr("Impossible de récupérer un prix de loyer correct");
 			e.printStackTrace();
 		    }
                     
@@ -117,7 +117,7 @@ public class Carreaux {
 		    try {
 			prixAchat = Integer.parseInt(data.get(i)[3]);
 		    } catch(Exception e) {
-			Interface.printerr("Impossible de récupérer un prix de loyer correct");
+			Texte.printerr("Impossible de récupérer un prix de loyer correct");
 			e.printStackTrace();
 		    }
                     
@@ -145,7 +145,7 @@ public class Carreaux {
 		    try {
 			prixAchat = Integer.parseInt(data.get(i)[3]);
 		    } catch(Exception e) {
-			Interface.printerr("Impossible de récupérer un prix de loyer correct");
+			Texte.printerr("Impossible de récupérer un prix de loyer correct");
 			e.printStackTrace();
 		    }
 
@@ -231,7 +231,7 @@ public class Carreaux {
 	}
 	
 	if (caseATrouver == null) {
-	    Interface.printerr("La case " + caseATrouver + " n'a pas été trouvée. Vérifiez votre plateau.");
+	    Texte.printerr("La case " + caseATrouver + " n'a pas été trouvée. Vérifiez votre plateau.");
 	}
 	
 	return caseATrouver;

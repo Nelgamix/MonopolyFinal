@@ -7,7 +7,7 @@ package Data;
 
 import Jeu.Joueur;
 import Jeu.Monopoly;
-import Ui.Interface;
+import Ui.Texte;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +25,7 @@ public class Joueurs {
     }
     
     public void inscriptionJoueurs() {
-	joueurs = Interface.jeu_inscrireJoueurs();
+	joueurs = Texte.jeu_inscrireJoueurs();
 	
 	for (Joueur j : joueurs) {
             j.setPositionCourante(carreaux.getCarreauAt(0));

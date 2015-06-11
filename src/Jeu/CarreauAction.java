@@ -1,6 +1,6 @@
 package Jeu;
 
-import Ui.Interface;
+import Ui.Texte;
 
 public abstract class CarreauAction extends Carreau {
     public CarreauAction(Monopoly monopoly, int numero, String nomCarreau) {
@@ -9,7 +9,7 @@ public abstract class CarreauAction extends Carreau {
     
     @Override
     public void action(Joueur j) {
-        Interface.carreau_action(this);
+        Texte.carreau_action(this);
     }
     
 }

@@ -1,6 +1,6 @@
 package Jeu;
 
-import Ui.Interface;
+import Ui.Texte;
 
 public class CarreauArgent extends CarreauAction {
     private int montant;
@@ -12,7 +12,7 @@ public class CarreauArgent extends CarreauAction {
 
     @Override
     public void action(Joueur j) {
-        Interface.carreau_action(this);
+        Texte.carreau_action(this);
         j.ajouterSousous(montant);
     }
     

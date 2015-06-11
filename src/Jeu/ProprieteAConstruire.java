@@ -1,7 +1,7 @@
 package Jeu;
 
 import Data.CouleurPropriete;
-import Ui.Interface;
+import Ui.Texte;
 import java.util.ArrayList;
 
 public class ProprieteAConstruire extends CarreauPropriete {
@@ -19,7 +19,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
 
     @Override
     public void action(Joueur j) {
-	Interface.carreau_action(this);
+	Texte.carreau_action(this);
 	String reponse;
 	
 	if (!isLibre()) {
@@ -31,11 +31,11 @@ public class ProprieteAConstruire extends CarreauPropriete {
 			// Si on peut construire une maison
 			if (j.getCash() >= getLoyerMaison()) {
 			    // Si le joueur a assez d'argent
-			    Interface.joueur_afficherArgent(j.getNomJoueur(), j.getCash());
-			    reponse = Interface.io("Voulez-vous construire une maison sur ces propriétés? (" + getPrixConstruction(1) + "€) (O/N)");
+			    Texte.joueur_afficherArgent(j.getNomJoueur(), j.getCash());
+			    reponse = Texte.io("Voulez-vous construire une maison sur ces propriétés? (" + getPrixConstruction(1) + "€) (O/N)");
 			    if (reponse.equals("O") || reponse.equals("o")) {
 				construireMaison(j);
-				Interface.debug_Value("Le joueur " + j.getNomJoueur() + " a bien ajouté une maison case " + this.getNomCarreau());
+				Texte.debug_Value("Le joueur " + j.getNomJoueur() + " a bien ajouté une maison case " + this.getNomCarreau());
 			    } else {
 
 			    }
@@ -43,11 +43,11 @@ public class ProprieteAConstruire extends CarreauPropriete {
 		    } else if (peutConstruireHotel(j)) {
 			// Sinon, si on peut construire un hotel
 			if (j.getCash() >= getLoyerHotel()) {
-			    Interface.joueur_afficherArgent(j.getNomJoueur(), j.getCash());
-			    reponse = Interface.io("Voulez-vous construire un hotel sur cette propriété? (" + getPrixConstruction(2) + "€) (O/N)");
+			    Texte.joueur_afficherArgent(j.getNomJoueur(), j.getCash());
+			    reponse = Texte.io("Voulez-vous construire un hotel sur cette propriété? (" + getPrixConstruction(2) + "€) (O/N)");
 			    if (reponse.equals("O") || reponse.equals("o")) {
 				construireHotel(j);
-				Interface.debug_Value("Le joueur " + j.getNomJoueur() + " a bien acheté un hotel case " + this.getNomCarreau());
+				Texte.debug_Value("Le joueur " + j.getNomJoueur() + " a bien acheté un hotel case " + this.getNomCarreau());
 			    } else {
 
 			    }
@@ -60,24 +60,24 @@ public class ProprieteAConstruire extends CarreauPropriete {
 		}
 	    } else {
 		if (j.getCash() >= getLoyerMaison()) {
-		    Interface.debug_Value("Le joueur " + j.getNomJoueur() + " a payé le loyer au joueur " + getProprio().getNomJoueur());
+		    Texte.debug_Value("Le joueur " + j.getNomJoueur() + " a payé le loyer au joueur " + getProprio().getNomJoueur());
 		    j.retirerSousous(getLoyerMaison());
 		    getProprio().ajouterSousous(getLoyerMaison());
 		} else {
-		    Interface.debug_Value("Le joueur " + j.getNomJoueur() + " n'a pas assez d'argent pour payer le loyer...");
+		    Texte.debug_Value("Le joueur " + j.getNomJoueur() + " n'a pas assez d'argent pour payer le loyer...");
 		}
 	    }
 	} else {
-	    if (j.getCash() >= getLoyerMaison()) {
+	    if (j.getCash() >= getPrix()) {
 		// Si le cash du joueur est supérieur ou égal au prix de la propriete
 		// Demande a acheter la propriete
-		Interface.joueur_afficherArgent(j.getNomJoueur(), j.getCash());
-		reponse = Interface.io("Voulez-vous acheter cette propriété? (" + getPrix() + "€) (O/N)");
+		Texte.joueur_afficherArgent(j.getNomJoueur(), j.getCash());
+		reponse = Texte.io("Voulez-vous acheter cette propriété? (" + getPrix() + "€) (O/N)");
 		if (reponse.equals("O") || reponse.equals("o")) {
 		    j.retirerSousous(getPrix());
 		    j.addPropriete(this);
 		    this.setProprio(j);
-		    Interface.debug_Value("Le joueur " + j.getNomJoueur() + " a bien acheté la propriété " + this.getNomCarreau());
+		    Texte.debug_Value("Le joueur " + j.getNomJoueur() + " a bien acheté la propriété " + this.getNomCarreau());
 		} else {
 
 		}

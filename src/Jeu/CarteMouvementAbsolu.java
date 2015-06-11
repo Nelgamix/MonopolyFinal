@@ -30,8 +30,9 @@ public class CarteMouvementAbsolu extends Carte {
         j.setPositionCourante(c);
         if (c.getNomCarreau().equals("Simple Visite / En Prison")) {
             j.setInPrison(true);
-        }
+        } else {
+	    j.actionner();
+	}
         System.out.println("Action mouvement absolu effectuée");
-	j.actionner();
     }
 }

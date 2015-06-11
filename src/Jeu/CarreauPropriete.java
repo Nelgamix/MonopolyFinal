@@ -1,7 +1,7 @@
 package Jeu;
 
 import Data.CouleurPropriete;
-import Ui.Interface;
+import Ui.Texte;
 import java.util.ArrayList;
 
 public abstract class CarreauPropriete extends Carreau {
@@ -44,7 +44,7 @@ public abstract class CarreauPropriete extends Carreau {
     
     @Override
     public void action(Joueur j) {
-        Interface.carreau_action(this);
+        Texte.carreau_action(this);
     }
     
     public Joueur getProprio(){

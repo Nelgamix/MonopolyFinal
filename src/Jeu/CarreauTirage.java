@@ -1,7 +1,7 @@
 package Jeu;
 
 import Data.Famille;
-import Ui.Interface;
+import Ui.Texte;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -29,7 +29,7 @@ public class CarreauTirage extends CarreauAction {
     
     @Override
     public void action(Joueur j) {
-        Interface.carreau_action(this);
+        Texte.carreau_action(this);
         Random rand = new Random();
         Carte carteHasard = cartes.get(rand.nextInt(cartes.size()));
         System.out.println("Vous tirez au sort et obtenez la carte n°" + (cartes.indexOf(carteHasard) + 1) + ". (" + carteHasard.getDescription() + ")");

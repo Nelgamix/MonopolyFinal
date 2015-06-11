@@ -5,7 +5,7 @@ import Data.Cartes;
 import Data.Joueurs;
 import java.util.ArrayList;
 import java.util.Random;
-import Ui.Interface;
+import Ui.Texte;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -14,7 +14,6 @@ public class Monopoly {
     private Joueur j;
     private Joueur first;
     private Joueur lastJ;
-    private int nbdes;
     private Cartes cartes = new Cartes(this);
     private Carreaux carreaux = new Carreaux(this);
     private Joueurs joueurs = new Joueurs(this);
@@ -58,18 +57,18 @@ public class Monopoly {
 	while (i < toursJeu) {
 	    if (j == first && j != lastJ) {
 		i++;
-		Interface.jeu_tourGlobal(i);
+		Texte.jeu_tourGlobal(i);
                 
 	    }
 	    
-	    Interface.jeu_tourJoueur(j.getNomJoueur());
+	    Texte.jeu_tourJoueur(j.getNomJoueur());
 	    
 	    lastJ = j;
 	    
-	    Interface.io("En attente de votre signal pour lancer les dés...");
+	    Texte.io("En attente de votre signal pour lancer les dés...");
 
 	    if (doubleCompt > 2) {
-		Interface.jeu_troisDoublePrison(j.getNomJoueur());
+		Texte.jeu_troisDoublePrison(j.getNomJoueur());
 		j.setInPrison(true);
 		j.setPositionCourante(carreaux.getCase("prison"));
 	    }
@@ -80,11 +79,11 @@ public class Monopoly {
 		jouerPrison();
 	    }
 
-	    if (!j.isDouble()) {
+	    if (!j.isDouble() || j.isInPrison()) {
 		j = joueurs.getJoueurAt((joueurs.getIndexOf(j) + 1) % joueurs.getSize());
 		doubleCompt = 0;
 	    } else {
-		Interface.joueur_rejoue(j.getNomJoueur());
+		Texte.joueur_rejoue(j.getNomJoueur());
 		doubleCompt++;
 	    }
 	    
@@ -99,8 +98,8 @@ public class Monopoly {
     
     private void jouerPrison() {
         if (j.hasPrison()) {
-            Interface.joueur_utiliserCarteSortiePrison();
-            String rep = Interface.input();
+            Texte.joueur_utiliserCarteSortiePrison();
+            String rep = Texte.input();
             if (rep.equals("O") || rep.equals("o")) {
                 j.retirerCarteSortiePrison();
                 jouerUnCoup();
@@ -117,16 +116,16 @@ public class Monopoly {
             int tirageDes = j.getDesTotal();
 
             if (j.isDouble()) {
-                Interface.joueur_sortiePrison();
+                Texte.joueur_sortiePrison();
                 j.sortiePrison();
                 jouerUnCoup(tirageDes);
             } else if (lance == 3) {
-                Interface.joueur_sortiePrisonPayer();
+                Texte.joueur_sortiePrisonPayer();
                 j.retirerSousous(50);
                 j.sortiePrison();
                 jouerUnCoup(tirageDes);
             } else {
-                Interface.joueur_resterPrison();
+                Texte.joueur_resterPrison();
             }
         }
     }
@@ -141,12 +140,12 @@ public class Monopoly {
             j.setPositionCourante(arrivee);
             j.actionner();
             j.setPositionCourante(carreaux.getCarreauAt(reste));
-	    Interface.joueur_afficherPosition(j.getNomJoueur(), j.getPositionCourante().getNumero(), j.getPositionCourante().getNomCarreau());
+	    Texte.joueur_afficherPosition(j.getNomJoueur(), j.getPositionCourante().getNumero(), j.getPositionCourante().getNomCarreau());
             j.actionner();
         } else {
             arrivee = carreaux.getCarreauAt((carreaux.getCarreaux().indexOf(j.getPositionCourante()) + j.getDesTotal()) % 39);
             j.setPositionCourante(arrivee);
-            Interface.joueur_afficherPosition(j.getNomJoueur(), j.getPositionCourante().getNumero(), j.getPositionCourante().getNomCarreau());
+            Texte.joueur_afficherPosition(j.getNomJoueur(), j.getPositionCourante().getNumero(), j.getPositionCourante().getNomCarreau());
             j.actionner();
         }
     }
@@ -157,14 +156,14 @@ public class Monopoly {
             arrivee = carreaux.getCarreauAt(0);
             int reste = (j.getPositionCourante().getNumero() + j.getDesTotal()) - 40;
             j.setPositionCourante(arrivee);
-            Interface.joueur_afficherPosition(j.getNomJoueur(), j.getPositionCourante().getNumero(), j.getPositionCourante().getNomCarreau());
+            Texte.joueur_afficherPosition(j.getNomJoueur(), j.getPositionCourante().getNumero(), j.getPositionCourante().getNomCarreau());
             j.actionner();
             j.setPositionCourante(carreaux.getCarreauAt(reste));
             j.actionner();
         } else {
             arrivee = carreaux.getCarreauAt((carreaux.getIndexOf(j.getPositionCourante()) + j.getDesTotal()) % 39);
             j.setPositionCourante(arrivee);
-            Interface.joueur_afficherPosition(j.getNomJoueur(), j.getPositionCourante().getNumero(), j.getPositionCourante().getNomCarreau());
+            Texte.joueur_afficherPosition(j.getNomJoueur(), j.getPositionCourante().getNumero(), j.getPositionCourante().getNomCarreau());
             j.actionner();
         }
     }
@@ -190,7 +189,7 @@ public class Monopoly {
 	Integer resultatDe;
 
 	for(Joueur j : joueurs.getJoueurs()) {
-	    Interface.jeu_tirageDes(j.getNomJoueur());
+	    Texte.jeu_tirageDes(j.getNomJoueur());
 	    tirageDes(j);
 	}
     }
@@ -205,7 +204,7 @@ public class Monopoly {
 	for (int i = 0; i < 2; i++) {
 	    resultatDes = Math.abs(ran.nextInt(5) + 1);
 	    j.addDe(resultatDes);
-	    Interface.joueur_afficherTirage(j.getNomJoueur(), resultatDes);
+	    Texte.joueur_afficherTirage(j.getNomJoueur(), resultatDes);
 
 	    try {
 		Thread.sleep(tempsPauseTirage);
@@ -266,8 +265,8 @@ public class Monopoly {
     }
     
     public void terminerJeu() {
-	Interface.fermerScanner();
-	Interface.jeu_aurevoir();
+	Texte.fermerScanner();
+	Texte.jeu_aurevoir();
 	System.exit(0);
     }
     

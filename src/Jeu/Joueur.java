@@ -1,7 +1,7 @@
 package Jeu;
 
 import Data.CouleurPropriete;
-import Ui.Interface;
+import Ui.Texte;
 import java.util.ArrayList;
 
 public final class Joueur {
@@ -136,9 +136,9 @@ public final class Joueur {
 	if (argent != 0) {
 	    if (this.getCash() - argent >= 0) {
 		this.setCash(this.getCash() - argent);
-		Interface.joueur_perdreArgent(this.getNomJoueur(), Math.abs(argent));
+		Texte.joueur_perdreArgent(this.getNomJoueur(), Math.abs(argent));
 	    } else {
-		Interface.joueur_noMoney();
+		Texte.joueur_noMoney();
 	    }
 
 	    afficherArgent();
@@ -155,7 +155,7 @@ public final class Joueur {
     
     public void ajouterSousous(int argent) {
 	if (argent > 0) {
-	    Interface.joueur_gagnerArgent(this.getNomJoueur(), argent);
+	    Texte.joueur_gagnerArgent(this.getNomJoueur(), argent);
 	    this.setCash(this.getCash() + argent);
 	    afficherArgent();
 	} else {
@@ -189,7 +189,7 @@ public final class Joueur {
     }
     
     public void afficherArgent() {
-	Interface.joueur_afficherArgent(this.getNomJoueur(), this.getCash());
+	Texte.joueur_afficherArgent(this.getNomJoueur(), this.getCash());
     }
     
     public boolean appartient(ProprieteAConstruire p) {
