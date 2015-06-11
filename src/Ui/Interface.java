@@ -115,7 +115,7 @@ public class Interface {
 
         for (int i = 0; i < 6; i++) {
             jeu_demanderJoueur(joueurs.size());
-            text = "Johny";//sc.nextLine();
+            text = sc.nextLine();
 
             if (text.equals("0")) {
                 break;
@@ -133,11 +133,11 @@ public class Interface {
     public static String io(String question) {
 	pln(question);
 	
-	return "";//sc.nextLine();
+	return sc.nextLine();
     }
     
     public static String input() {
-	return "";//sc.nextLine();
+	return sc.nextLine();
     }
     
     public static void joueur_afficherArgent(String nomJoueur, int argent) {

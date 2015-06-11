@@ -17,9 +17,9 @@ public class Controleur {
     private Monopoly monopoly;
 
     public Controleur() {
-	window = new WindowUI(this);
-	window.setVisible(true);
-	//monopoly = new Monopoly();
+	//window = new WindowUI(this);
+	//window.setVisible(true);
+	monopoly = new Monopoly();
     }
     
     
