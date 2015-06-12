@@ -2,16 +2,10 @@ package Ui;
 
 import Data.Controleur;
 import java.awt.*;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
  
 
 public class WindowUI extends JFrame {
@@ -35,7 +29,7 @@ public class WindowUI extends JFrame {
         String current = "";
 
         try {
-            current = new java.io.File(".").getCanonicalPath() + "\\fotau\\";
+            current = new java.io.File(".").getCanonicalPath() + "/fotau/";
         } catch(IOException e) {
             e.printStackTrace();
         }

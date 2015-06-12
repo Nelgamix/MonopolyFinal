@@ -4,6 +4,7 @@ public abstract class Carreau {
     private int numero;
     private String nomCarreau;
     private Monopoly monopoly;
+    public static final boolean DEBUG = true;
 
     public Carreau(Monopoly monopoly, int numero, String nomCarreau) {
 	this.setNumero(numero);

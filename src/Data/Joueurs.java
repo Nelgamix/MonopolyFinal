@@ -48,6 +48,18 @@ public class Joueurs {
 	return joueurs.indexOf(j);
     }
     
+    public Joueur getJoueurName(String nom) {
+        Joueur toReturn = null;
+        
+        for (Joueur j : joueurs) {
+            if (nom.equals(j.getNomJoueur())) {
+                toReturn = j;
+            }
+        }
+        
+        return toReturn;
+    }
+    
     public int getSize() {
 	return joueurs.size();
     }
