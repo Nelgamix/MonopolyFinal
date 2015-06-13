@@ -238,4 +238,8 @@ public final class Joueur {
 	    compagnies.add(c);
 	}
     }
+    
+    public ArrayList<ProprieteAConstruire> getPropriete(){
+        return proprietesAConstruire;
+    }
 }

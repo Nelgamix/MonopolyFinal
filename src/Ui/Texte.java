@@ -1,5 +1,6 @@
 package Ui;
 
+import Data.CouleurPropriete;
 import Jeu.Carreau;
 import Jeu.CarreauPropriete;
 import Jeu.Gare;
@@ -267,18 +268,82 @@ public class Texte {
 	
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    public static ProprieteAConstruire joueurChoix(Joueur j, ProprieteAConstruire p) {
+        CouleurPropriete c = null;
+        ArrayList<ProprieteAConstruire> prop = null;        
+        c = p.getCouleur();
+        int min = 4;
+        ProprieteAConstruire propArr = null;
+        ProprieteAConstruire propArr1 = null;
+        ProprieteAConstruire propArr2 = null;
+        ProprieteAConstruire Areturn = null;
+        String text;
+        int numero = 0;
+        
+        for(ProprieteAConstruire pe : j.getPropriete()){
+            if(pe.getCouleur()==c){
+                prop.add(pe);
+            }    
+        }
+        // Inteface command
+        for(ProprieteAConstruire pe : prop){
+            if(min >pe.getNbMaisons()){
+                min=pe.getNbMaisons();
+                if(propArr != null || propArr.getNbMaisons()>min){
+                    propArr =pe;
+                }else if(propArr1!= null){
+                    propArr1 =pe;
+                }else{
+                    propArr2 =pe;
+                }
+            }
+        }
+        
+        if(propArr2!=null){
+            pln("Vous avez le choix entre 3 propriétés, veuillez choisir un numéro :");
+            pln(propArr.getNomCarreau() + "numéro 1");
+            pln(propArr1.getNomCarreau() + "numéro 2");
+            pln(propArr2.getNomCarreau() + "numéro 3");
+            text = sc.nextLine();
+            
+            try {
+                        numero = Integer.parseInt(text);
+		    } catch(Exception e) {
+			pln("Veuillez rentrer un numéro et seulement un numéro s'il vous plait");
+		    }
+            switch(numero){
+                case 1:
+                    return propArr;
+                case 2:
+                        return propArr1;
+                case 3:
+                        return propArr2;  
+            }
+            
+        }else if(propArr1!=null){
+            pln("Vous avez le choix entre 2 propriétés, veuillez choisir un numéro :");
+            pln(propArr.getNomCarreau() + "numéro 1");
+            pln(propArr1.getNomCarreau() + "numéro 2");
+            text = sc.nextLine();
+            
+            try {
+                        numero = Integer.parseInt(text);
+		    } catch(Exception e) {
+			pln("Veuillez rentrer un numéro et seulement un numéro s'il vous plait");
+		    }
+            switch(numero){
+                case 1:
+                    return propArr;
+                case 2:
+                        return propArr1; 
+            }
+  
+        }else{
+            text =io("Vous pouvez construire que sur "+propArr.getNomCarreau());
+            return propArr;
+        }
+        return Areturn;
+    }
     
     public static void fermerScanner() {
 	sc.close();

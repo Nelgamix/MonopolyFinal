@@ -21,6 +21,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
     public void action(Joueur j) {
 	Texte.carreau_action(this);
 	String reponse;
+        ProprieteAConstruire p = null;
 	
 	if (!isLibre()) {
 	    if (getProprio() == j) {
@@ -31,7 +32,8 @@ public class ProprieteAConstruire extends CarreauPropriete {
 			// Si on peut construire une maison
 			if (j.getCash() >= getPrixConstruction(1) && getMonopoly().getNbMaisons() > 0) {
 			    // Si le joueur a assez d'argent
-			    Texte.propriete_construireMaison(this, j);
+			    p=Texte.joueurChoix(j, this);
+                            Texte.propriete_construireMaison(p, j);
 			}
 		    } else if (peutConstruireHotel(j)) {
 			// Sinon, si on peut construire un hotel
