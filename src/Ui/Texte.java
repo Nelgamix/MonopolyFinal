@@ -232,13 +232,15 @@ public class Texte {
 	pln("  1. Prochain joueur: place sur une case propriété à construire");
 	pln("  2. Prochain joueur: place sur une case propriété à construire, et possède le groupe");
 	pln("  3. Prochain joueur: place sur une case propriété à construire, et possède le groupe avec 4 maisons sur chacune");
-	pln("  4. Prochain joueur: place sur une gare"); // Gare
-	pln("  5. Prochain joueur: place sur une gare alors qu'un autre joueur en possède déjà 4"); // Place n'importe ou
-	pln("  6. Prochain joueur: place sur une case chance"); // Case chance / commu
-	pln("  7. Prochain joueur: place sur une case via son une partie de son nom");
-	pln("  8. ");
-	pln("  9. ");
-	pln(" 10. ");
+	pln("  4. Prochain joueur: place sur une gare");
+	pln("  5. Prochain joueur: place sur une gare alors qu'un autre joueur en possède déjà 4");
+	pln("  6. Prochain joueur: place sur une case chance");
+	pln("  7. Prochain joueur: place sur une case communauté");
+	pln("  8. Prochain joueur: place sur une case prison");
+	pln("  9. Prochain joueur: place sur une case via son une partie de son nom");
+	pln(" 10. Prochain joueur: fait un tour complet puis reviens sur la même case où il était");
+	pln(" 11. ");
+	pln(" 12. ");
 	
 	String choixS = input();
 	int choix = 0;
@@ -283,8 +285,21 @@ public class Texte {
 		m.getJoueurActuel().setPositionCourante(m.getCarreaux().getCase("Chance"));
 		break;
 	    case 7:
+		m.getJoueurActuel().setPositionCourante(m.getCarreaux().getCase("Communauté"));
+		break;
+	    case 8:
+		m.getJoueurActuel().setPositionCourante(m.getCarreaux().getCase("Allez en prison"));
+		break;
+	    case 9:
 		m.getJoueurActuel().setPositionCourante(m.getCarreaux().getCase(Texte.io("Numéro de la case")));
 		break;
+	    case 10:
+		Carreau c = m.getJoueurActuel().getPositionCourante();
+		Joueur j = m.getJoueurActuel();
+		joueur_afficherPosition(j.getNomJoueur(), j.getPositionCourante().getNumero(), j.getPositionCourante().getNomCarreau());
+		m.getJoueurActuel().setPositionCourante(m.getCarreaux().getCase("Départ"));
+		m.getJoueurActuel().actionner();
+		m.getJoueurActuel().setPositionCourante(c);
 	    default:
 		pln("Pas de choix");
 		break;

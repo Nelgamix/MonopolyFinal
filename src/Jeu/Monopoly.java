@@ -23,7 +23,7 @@ public class Monopoly {
     // Constants
     private static final int tempsPauseJoueurs = 2000;
     private static final int tempsPauseTirage = 500;
-    private static final int toursJeu = 20;
+    private static final int toursJeu = Integer.MAX_VALUE;
     int doubleCompt = 0;
     
     public Monopoly() {
