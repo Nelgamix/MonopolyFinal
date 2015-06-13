@@ -196,6 +196,18 @@ public class Carreaux {
 	return toReturn;
     }
     
+    public ArrayList<Gare> getGares() {
+	ArrayList<Gare> toReturn = new ArrayList<>();
+	
+	for (Carreau c : carreaux) {
+	    if (c instanceof Gare) {
+		toReturn.add((Gare)c);
+	    }
+	}
+	
+	return toReturn;
+    }
+    
     public Carreau getCase(String nomCase) {
 	Carreau caseATrouver = null;
         //System.out.println("We search for case " + nomCase);

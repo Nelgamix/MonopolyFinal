@@ -232,10 +232,10 @@ public class Texte {
 	pln("  1. Prochain joueur: place sur une case propriété à construire");
 	pln("  2. Prochain joueur: place sur une case propriété à construire, et possède le groupe");
 	pln("  3. Prochain joueur: place sur une case propriété à construire, et possède le groupe avec 4 maisons sur chacune");
-	pln("  4. "); // Gare
-	pln("  5. "); // Place n'importe ou
-	pln("  6. "); // Case chance / commu
-	pln("  7. "); // 
+	pln("  4. Prochain joueur: place sur une gare"); // Gare
+	pln("  5. Prochain joueur: place sur une gare alors qu'un autre joueur en possède déjà 4"); // Place n'importe ou
+	pln("  6. Prochain joueur: place sur une case chance"); // Case chance / commu
+	pln("  7. Prochain joueur: place sur une case via son une partie de son nom");
 	pln("  8. ");
 	pln("  9. ");
 	pln(" 10. ");
@@ -261,6 +261,30 @@ public class Texte {
 		m.getCarreaux().getProprietesAConstruire().get(3).assignAllProprietesAt(m.getJoueurActuel());
 		m.getCarreaux().getProprietesAConstruire().get(3).setGroupeMaxMaison();
 		break;
+	    case 4:
+		m.getJoueurActuel().setPositionCourante(m.getCarreaux().getGares().get(0));
+		break;
+	    case 5:
+		if (m.getJoueurs().getJoueurAt(0) != m.getJoueurActuel()) {
+		    m.getJoueurActuel().setPositionCourante(m.getCarreaux().getGares().get(0));
+		    for (Gare g : m.getCarreaux().getGares()) {
+			g.setProprio(m.getJoueurs().getJoueurAt(0));
+			m.getJoueurs().getJoueurAt(0).addGare(g);
+		    }
+		} else {
+		    m.getJoueurActuel().setPositionCourante(m.getCarreaux().getGares().get(0));
+		    for (Gare g : m.getCarreaux().getGares()) {
+			g.setProprio(m.getJoueurs().getJoueurAt(1));
+			m.getJoueurs().getJoueurAt(1).addGare(g);
+		    }
+		}
+		break;
+	    case 6:
+		m.getJoueurActuel().setPositionCourante(m.getCarreaux().getCase("Chance"));
+		break;
+	    case 7:
+		m.getJoueurActuel().setPositionCourante(m.getCarreaux().getCase(Texte.io("Numéro de la case")));
+		break;
 	    default:
 		pln("Pas de choix");
 		break;
@@ -270,7 +294,7 @@ public class Texte {
     
     public static ProprieteAConstruire joueurChoix(Joueur j, ProprieteAConstruire p) {
         CouleurPropriete c = null;
-        ArrayList<ProprieteAConstruire> prop = null;        
+        ArrayList<ProprieteAConstruire> prop = null;
         c = p.getCouleur();
         int min = 4;
         ProprieteAConstruire propArr = null;
