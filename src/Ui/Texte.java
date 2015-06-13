@@ -2,8 +2,10 @@ package Ui;
 
 import Jeu.Carreau;
 import Jeu.CarreauPropriete;
+import Jeu.Gare;
 import Jeu.Joueur;
 import Jeu.Monopoly;
+import Jeu.ProprieteAConstruire;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -143,6 +145,140 @@ public class Texte {
     public static void joueur_afficherArgent(String nomJoueur, int argent) {
 	pln("Le joueur " + nomJoueur + " possède " + argent + "€");
     }
+    
+    public static boolean jeu_demanderType() {
+	String rep = io("Voulez-vous la version graphique? (O / N)");
+	if (rep.equalsIgnoreCase("o")) {
+	    return true;
+	} else {
+	    return false;
+	}
+    }
+    
+    public static void propriete_construireMaison(ProprieteAConstruire p, Joueur j) {
+	joueur_afficherArgent(j.getNomJoueur(), j.getCash());
+	String reponse = Texte.io("Voulez-vous construire une maison sur ces propriétés? (" + p.getPrixConstruction(1) + "€) (O/N)");
+	if (reponse.equals("O") || reponse.equals("o")) {
+	    p.construireMaison(j);
+	    j.retirerSousous(p.getPrixConstruction(1));
+	    pln("Le joueur " + j.getNomJoueur() + " a bien ajouté une maison case " + p.getNomCarreau());
+	} else {
+	    pln("Vous avez choisi de ne pas construire de maison.");
+	}
+    }
+    
+    public static void propriete_construireHotel(ProprieteAConstruire p, Joueur j) {
+	joueur_afficherArgent(j.getNomJoueur(), j.getCash());
+	String reponse = Texte.io("Voulez-vous construire un hotel sur cette propriété? (" + p.getPrixConstruction(2) + "€) (O/N)");
+	if (reponse.equals("O") || reponse.equals("o")) {
+	    p.construireHotel(j);
+	    j.retirerSousous(p.getPrixConstruction(2));
+	    pln("Le joueur " + j.getNomJoueur() + " a bien acheté un hotel case " + p.getNomCarreau());
+	} else {
+	    pln("Vous avez choisi de ne pas construire d'hotel.");
+	}
+    }
+    
+    public static void propriete_payerLoyer(ProprieteAConstruire p, Joueur j) {
+	if (j.getCash() >= p.getLoyerMaison()) {
+	    pln("Le joueur " + j.getNomJoueur() + " a payé le loyer au joueur " + p.getProprio().getNomJoueur());
+	    j.retirerSousous(p.getLoyerMaison());
+	    p.getProprio().ajouterSousous(p.getLoyerMaison());
+	} else {
+	    pln("Le joueur " + j.getNomJoueur() + " n'a pas assez d'argent pour payer le loyer...");
+	}
+    }
+    
+    public static void propriete_acheter(ProprieteAConstruire p, Joueur j) {
+	joueur_afficherArgent(j.getNomJoueur(), j.getCash());
+	String reponse = Texte.io("Voulez-vous acheter cette propriété? (" + p.getPrix() + "€) (O/N)");
+	if (reponse.equals("O") || reponse.equals("o")) {
+	    j.retirerSousous(p.getPrix());
+	    j.addPropriete(p);
+	    p.setProprio(j);
+	    pln("Le joueur " + j.getNomJoueur() + " a bien acheté la propriété " + p.getNomCarreau());
+	} else {
+
+	}
+    }
+    
+    public static void gare_acheter(Gare g, Joueur j) {
+	joueur_afficherArgent(j.getNomJoueur(), j.getCash());
+	String reponse = Texte.io("Voulez-vous acheter cette gare? (" + g.getPrix() + "€) (O/N)");
+	if (reponse.equals("O") || reponse.equals("o")) {
+	    j.retirerSousous(g.getPrix());
+	    g.setProprio(j);
+	    j.addGare(g);
+	    pln("Le joueur " + j.getNomJoueur() + " a bien acheté la gare " + g.getNomCarreau());
+	} else {
+
+	}
+    }
+    
+    public static void gare_payerLoyer(Gare g, Joueur j) {
+	pln("Le joueur " + j.getNomJoueur() + " tombe sur une gare de " + g.getProprio().getNomJoueur() + " qui possede " + g.getProprio().getNbGare()
+			+ " gares; il lui paye donc " + g.getPrixLoyer(g.getProprio()) + "€");
+	if (j.getCash() >= g.getPrixLoyer(g.getProprio())) {
+	    j.retirerSousous(g.getPrixLoyer(g.getProprio()));
+	    g.getProprio().ajouterSousous(g.getPrixLoyer(g.getProprio()));
+	} else {
+	    pln("... cependant, il n'a pas assez d'argent");
+	}
+    }
+    
+    public static void jeu_debug(Monopoly m) {
+	pln("Liste de choix pour la démonstration:");
+	pln("  1. Prochain joueur: place sur une case propriété à construire");
+	pln("  2. Prochain joueur: place sur une case propriété à construire, et possède le groupe");
+	pln("  3. Prochain joueur: place sur une case propriété à construire, et possède le groupe avec 4 maisons sur chacune");
+	pln("  4. "); // Gare
+	pln("  5. "); // Place n'importe ou
+	pln("  6. "); // Case chance / commu
+	pln("  7. "); // 
+	pln("  8. ");
+	pln("  9. ");
+	pln(" 10. ");
+	
+	String choixS = input();
+	int choix = 0;
+	try {
+	    choix = Integer.parseInt(choixS);
+	} catch (NumberFormatException n) {
+	    pln("Choix incorrect.");
+	}
+	
+	switch (choix) {
+	    case 1:
+		m.getJoueurs().getJoueurAt(0).setPositionCourante(m.getCarreaux().getProprietesAConstruire().get(0));
+		break;
+	    case 2:
+		m.getJoueurs().getJoueurAt(1).setPositionCourante(m.getCarreaux().getProprietesAConstruire().get(2));
+		m.getCarreaux().getProprietesAConstruire().get(2).assignAllProprietesAt(m.getJoueurs().getJoueurAt(1));
+		break;
+	    case 3:
+		m.getJoueurs().getJoueurAt(0).setPositionCourante(m.getCarreaux().getProprietesAConstruire().get(3));
+		m.getCarreaux().getProprietesAConstruire().get(3).assignAllProprietesAt(m.getJoueurs().getJoueurAt(0));
+		m.getCarreaux().getProprietesAConstruire().get(3).setGroupeMaxMaison();
+		break;
+	    default:
+		pln("Pas de choix");
+		break;
+	}
+	
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     public static void fermerScanner() {
 	sc.close();

@@ -6,6 +6,7 @@
 package Data;
 
 import Jeu.Monopoly;
+import Ui.Texte;
 import Ui.WindowUI;
 
 /**
@@ -17,10 +18,13 @@ public class Controleur {
     private Monopoly monopoly;
 
     public Controleur() {
-	//window = new WindowUI(this);
-	//window.setVisible(true);
-	monopoly = new Monopoly();
+	if (Texte.jeu_demanderType()) {
+	    window = new WindowUI(this);
+	    window.setVisible(true);
+	} else {
+	    monopoly = new Monopoly();
+	}
+	
     }
-    
     
 }

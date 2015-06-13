@@ -21,16 +21,6 @@ public class ProprieteAConstruire extends CarreauPropriete {
     public void action(Joueur j) {
 	Texte.carreau_action(this);
 	String reponse;
-        
-        if (DEBUG) {
-            for (ProprieteAConstruire c : getMonopoly().getCarreaux().getProprietesAConstruire()) {
-                if (c.getCouleur() == this.getCouleur()) {
-                    c.setProprio(j);
-                    j.addPropriete(c);
-                    System.out.println("Debug: La case " + c.getNomCarreau() + " appartient a " + j.getNomJoueur());
-                }
-            }
-        }
 	
 	if (!isLibre()) {
 	    if (getProprio() == j) {
@@ -41,61 +31,38 @@ public class ProprieteAConstruire extends CarreauPropriete {
 			// Si on peut construire une maison
 			if (j.getCash() >= getPrixConstruction(1) && getMonopoly().getNbMaisons() > 0) {
 			    // Si le joueur a assez d'argent
-			    Texte.joueur_afficherArgent(j.getNomJoueur(), j.getCash());
-			    reponse = Texte.io("Voulez-vous construire une maison sur ces propriétés? (" + getPrixConstruction(1) + "€) (O/N)");
-			    if (reponse.equals("O") || reponse.equals("o")) {
-				construireMaison(j);
-                                j.retirerSousous(getPrixConstruction(1));
-				Texte.debug_Value("Le joueur " + j.getNomJoueur() + " a bien ajouté une maison case " + this.getNomCarreau());
-			    } else {
-
-			    }
+			    Texte.propriete_construireMaison(this, j);
 			}
 		    } else if (peutConstruireHotel(j)) {
 			// Sinon, si on peut construire un hotel
 			if (j.getCash() >= getPrixConstruction(2) && getMonopoly().getNbHotels() > 0) {
-			    Texte.joueur_afficherArgent(j.getNomJoueur(), j.getCash());
-			    reponse = Texte.io("Voulez-vous construire un hotel sur cette propriété? (" + getPrixConstruction(2) + "€) (O/N)");
-			    if (reponse.equals("O") || reponse.equals("o")) {
-				construireHotel(j);
-                                j.retirerSousous(getPrixConstruction(2));
-				Texte.debug_Value("Le joueur " + j.getNomJoueur() + " a bien acheté un hotel case " + this.getNomCarreau());
-			    } else {
-
-			    }
+			    Texte.propriete_construireHotel(this, j);
 			}
 		    } else {
 			// On peut plus rien faire pour lui
-                        
 		    }
 		} else {
 		    // Sinon, on fait rien
 		}
 	    } else {
-		if (j.getCash() >= getLoyerMaison()) {
-		    Texte.debug_Value("Le joueur " + j.getNomJoueur() + " a payé le loyer au joueur " + getProprio().getNomJoueur());
-		    j.retirerSousous(getLoyerMaison());
-		    getProprio().ajouterSousous(getLoyerMaison());
-		} else {
-		    Texte.debug_Value("Le joueur " + j.getNomJoueur() + " n'a pas assez d'argent pour payer le loyer...");
-		}
+		Texte.propriete_payerLoyer(this, j);
 	    }
 	} else {
 	    if (j.getCash() >= getPrix()) {
 		// Si le cash du joueur est supérieur ou égal au prix de la propriete
 		// Demande a acheter la propriete
-		Texte.joueur_afficherArgent(j.getNomJoueur(), j.getCash());
-		reponse = Texte.io("Voulez-vous acheter cette propriété? (" + getPrix() + "€) (O/N)");
-		if (reponse.equals("O") || reponse.equals("o")) {
-		    j.retirerSousous(getPrix());
-		    j.addPropriete(this);
-		    this.setProprio(j);
-		    Texte.debug_Value("Le joueur " + j.getNomJoueur() + " a bien acheté la propriété " + this.getNomCarreau());
-		} else {
-
-		}
+		Texte.propriete_acheter(this, j);
 	    } else {
 		// On fait rien
+	    }
+	}
+    }
+    
+    public void assignAllProprietesAt(Joueur j) {
+	for (ProprieteAConstruire c : getMonopoly().getCarreaux().getProprietesAConstruire()) {
+	    if (c.getCouleur() == this.getCouleur()) {
+		c.setProprio(j);
+		j.addPropriete(c);
 	    }
 	}
     }
@@ -183,8 +150,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
     public boolean possedeGroupe(Joueur j) {
         CouleurPropriete c = getCouleur();
 	
-	// proprietesAConstruire = Propriétes du joueur? donc elles sont forcement à lui, il faudrait aller chercher celles du jeu
-        for(ProprieteAConstruire pe : getMonopoly().getCarreaux().getProprietesAConstruire()){
+        for(ProprieteAConstruire pe : getMonopoly().getCarreaux().getProprietesAConstruire()) {
 	    if (c == pe.getCouleur() && pe.getProprio() != j) {
 		return false;
 	    }
@@ -200,6 +166,19 @@ public class ProprieteAConstruire extends CarreauPropriete {
 	    j.retirerSousous(getPrixConstruction(1));
             getMonopoly().setNbMaisons(getMonopoly().getNbMaisons() - 1);
 	    nbMaisons++;
+	}
+    }
+    
+    public void setMaxMaison() {
+	getMonopoly().setNbMaisons(getMonopoly().getNbMaisons() - 4);
+	nbMaisons = 4;
+    }
+    
+    public void setGroupeMaxMaison() {
+	for (ProprieteAConstruire c : getMonopoly().getCarreaux().getProprietesAConstruire()) {
+	    if (c.getCouleur() == this.getCouleur()) {
+		c.setMaxMaison();
+	    }
 	}
     }
     
@@ -225,7 +204,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
 	
         for(ProprieteAConstruire p : getMonopoly().getCarreaux().getProprietesAConstruire()){ 
 	    if (couleur == p.getCouleur()) {
-		if(p.getNbMaisons() <= min && p.getNbHotels()==0){
+		if(p.getNbMaisons() <= min && p.getNbHotels() == 0){
 		    min = p.getNbMaisons();
 		    prop = p;
 		}

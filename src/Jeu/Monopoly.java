@@ -73,24 +73,30 @@ public class Monopoly {
 	    
 	    lastJ = j;
 	    
-	    Texte.io("En attente de votre signal pour lancer les dés...");
-            
-            tirageDes(j);
-            
-            if (j == joueurs.getJoueurName("Ours")) {
-                getJoueurInPrison(j.getNomJoueur());
-            }
-            
-	    if (doubleCompt > 2) {
-		Texte.jeu_troisDoublePrison(j.getNomJoueur());
-		j.setInPrison(true);
-		j.setPositionCourante(carreaux.getCase("prison"));
-	    }
+	    if (Texte.io("En attente de votre signal pour lancer les dés... (D pour debug)").equalsIgnoreCase("D")) {
+		Texte.jeu_debug(this);
+		
+		if (doubleCompt > 2) {
+		    Texte.jeu_troisDoublePrison(j.getNomJoueur());
+		    j.setInPrison(true);
+		    j.setPositionCourante(carreaux.getCase("prison"));
+		}
+		
+		Texte.joueur_afficherPosition(j.getNomJoueur(), j.getPositionCourante().getNumero(), j.getPositionCourante().getNomCarreau());
+		j.actionner();
+	    } else {
+		tirageDes(j);
+		if (doubleCompt > 2) {
+		    Texte.jeu_troisDoublePrison(j.getNomJoueur());
+		    j.setInPrison(true);
+		    j.setPositionCourante(carreaux.getCase("prison"));
+		}
 
-            if (!j.isInPrison()) {
-		jouerUnCoup();
-	    } else if (doubleCompt < 3) {
-		jouerPrison();
+		if (!j.isInPrison()) {
+		    jouerUnCoup();
+		} else if (doubleCompt < 3) {
+		    jouerPrison();
+		}
 	    }
             
 	    if (!j.isDouble() || j.isInPrison()) {
@@ -101,7 +107,7 @@ public class Monopoly {
 		doubleCompt++;
 	    }
 	    
-	    // PAUSE 2 SECONDES
+	    // PAUSE
 	    try {
 		Thread.sleep(tempsPauseJoueurs);
 	    } catch (InterruptedException ie) {
@@ -135,7 +141,7 @@ public class Monopoly {
                 jouerUnCoup();
                 j.sortiePrison();
             } else {
-                //System.out.println("Tu es relou, mais je t'aime bien quand même");
+                
             }
         }
 	

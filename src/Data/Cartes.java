@@ -42,11 +42,11 @@ public class Cartes {
         cartes.add(c);
         c = new CarteReparation(Famille.chance, "Taxe de réparation : payez 40€ maison et 115€ par hôtel", -115, -40, monopoly);
         cartes.add(c);
-        c = new CarteArgent(Famille.chance, "Amende tu roules trop vite paye 15€ !", -15, monopoly);
+        c = new CarteArgent(Famille.chance, "Amende : tu roules trop vite paye 15€ !", -15, monopoly);
         cartes.add(c);
         c = new CarteReparation(Famille.chance, "Taxe de réparation : payez 25€ maison et 100€ par hôtel", -100, -25, monopoly);
         cartes.add(c);
-        c = new CarteArgent(Famille.chance, "Amende tu es bourré paye 20€", -20, monopoly);
+        c = new CarteArgent(Famille.chance, "Amende : tu es bourré paye 20€", -20, monopoly);
         cartes.add(c);
         c = new CarteMouvementAbsolu(false,Famille.chance, "Allez jusqu'a la case départ", carreaux.getCarreauAt(0), monopoly);
         cartes.add(c);
@@ -70,33 +70,33 @@ public class Cartes {
         cartes.add(c);
         c = new CarteArgent(Famille.communaute, "Amende tu fermes ta gueule paye 10€ !", -10, monopoly);
         cartes.add(c);
-        c = new CarteAnniv(Famille.communaute, "Douille tout le monde, c'est ton annif, tout le monde se cotise pour te payer une put*", monopoly);
+        c = new CarteAnniv(Famille.communaute, "C'est ton anniversaire, tout le monde te donne de l'argent", monopoly);
         cartes.add(c);
-        c = new CarteArgent(Famille.communaute, "La banque vous verse 200€ (pas vraiment, mais t'y crois)", 200, monopoly);
+        c = new CarteArgent(Famille.communaute, "La banque vous verse 200€", 200, monopoly);
         cartes.add(c);
-        c = new CarteMouvementAbsolu(true,Famille.communaute, "Retournez à bonneville", carreaux.getCase("belleville"), monopoly);
+        c = new CarteMouvementAbsolu(true,Famille.communaute, "Retournez à belleville", carreaux.getCase("belleville"), monopoly);
         cartes.add(c);
-        c = new CarteArgent(Famille.communaute, "Paye medecin! Douillage 50€ non remboursé", -50, monopoly);
+        c = new CarteArgent(Famille.communaute, "Paye medecin. 50€ non remboursé", -50, monopoly);
         cartes.add(c);
         c = new CarteArgent(Famille.communaute, "On te rembourse 20€", 20, monopoly);
         cartes.add(c);
         c = new CarteArgent(Famille.communaute, "Paye hopital, 100€ non remboursé", -100, monopoly);
         cartes.add(c);
-        c = new CarteArgent(Famille.communaute, "Vous héritez de 100€, mémé qui est morte", 100, monopoly);
+        c = new CarteArgent(Famille.communaute, "Vous héritez de 100€", 100, monopoly);
         cartes.add(c);
         c = new CarteMouvementAbsolu(true,Famille.communaute, "Va en prison et tu prends pas les 200€ si tu passes par la case départ", carreaux.getCase("prison"), monopoly);
         cartes.add(c);
         c = new CarteArgent(Famille.communaute, "Paye la police d'assurance, 50€", -50, monopoly);
         cartes.add(c);
-        c = new CarteArgent(Famille.communaute, "La vente du coca vous rapporte 50€", 50, monopoly);
+        c = new CarteArgent(Famille.communaute, "Une vente vous rapporte 50€", 50, monopoly);
         cartes.add(c);
         c = new CarteMouvementAbsolu(false,Famille.communaute, "Allez jusqu'a la case départ", carreaux.getCarreaux().get(0), monopoly);
         cartes.add(c);
-        c = new CarteArgent(Famille.communaute, "Interet sur le coca de 7% (25€)", 25, monopoly);
+        c = new CarteArgent(Famille.communaute, "25€", 25, monopoly);
         cartes.add(c);
-        c = new CarteArgent(Famille.communaute, "Recois les alloc 100 boules", 100, monopoly);
+        c = new CarteArgent(Famille.communaute, "Reçois les alloc 100€", 100, monopoly);
         cartes.add(c);
-        c = new CarteArgent(Famille.communaute, "T TRO BO, 10€ pour TOA", 10, monopoly);
+        c = new CarteArgent(Famille.communaute, "10€", 10, monopoly);
         cartes.add(c);
 	
 	for (Carreau ca : carreaux.getCarreaux()) {
@@ -109,6 +109,10 @@ public class Cartes {
     
     public ArrayList<Carte> getCartes() {
 	return cartes;
+    }
+    
+    public void removeCarte(Carte c) {
+	cartes.remove(c);
     }
     
 }

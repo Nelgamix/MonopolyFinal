@@ -17,27 +17,11 @@ public class Gare extends CarreauPropriete {
 	
 	if (!isLibre()) {
 	    if (getProprio() != j) {
-		Texte.debug_Value("Le joueur " + j.getNomJoueur() + " tombe sur une gare de " + getProprio().getNomJoueur() + " qui possede " + getProprio().getNbGare()
-			+ " gares; il lui paye donc " + getPrixLoyer(getProprio()) + "€");
-		if (j.getCash() >= getPrixLoyer(getProprio())) {
-		    j.retirerSousous(getPrixLoyer(getProprio()));
-		    getProprio().ajouterSousous(getPrixLoyer(getProprio()));
-		} else {
-		    Texte.debug_Value("... cependant, il n'a pas assez d'argent");
-		}
+		Texte.gare_payerLoyer(this, j);
 	    }
 	} else {
 	    // Achete?
-	    Texte.joueur_afficherArgent(j.getNomJoueur(), j.getCash());
-	    reponse = Texte.io("Voulez-vous acheter cette gare? (" + getPrix() + "€) (O/N)");
-	    if (reponse.equals("O") || reponse.equals("o")) {
-		j.retirerSousous(getPrix());
-		this.setProprio(j);
-		j.addGare(this);
-		Texte.debug_Value("Le joueur " + j.getNomJoueur() + " a bien acheté la gare " + this.getNomCarreau());
-	    } else {
-
-	    }
+	    Texte.gare_acheter(this, j);
 	}
     }
     

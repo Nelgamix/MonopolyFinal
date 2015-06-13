@@ -5,14 +5,13 @@
  */
 package Ui;
 
+import Jeu.Joueur;
+
 /**
  *
  * @author Nico
  */
 public class Interface {
-    
-    
-    
     
     
     
