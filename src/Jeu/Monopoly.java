@@ -49,6 +49,10 @@ public class Monopoly {
 	return joueurs;
     }
     
+    public Joueur getJoueurActuel() {
+	return j;
+    }
+    
     public Cartes getCartes() {
 	return cartes;
     }

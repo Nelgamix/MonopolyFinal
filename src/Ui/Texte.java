@@ -250,15 +250,15 @@ public class Texte {
 	
 	switch (choix) {
 	    case 1:
-		m.getJoueurs().getJoueurAt(0).setPositionCourante(m.getCarreaux().getProprietesAConstruire().get(0));
+		m.getJoueurActuel().setPositionCourante(m.getCarreaux().getProprietesAConstruire().get(0));
 		break;
 	    case 2:
-		m.getJoueurs().getJoueurAt(1).setPositionCourante(m.getCarreaux().getProprietesAConstruire().get(2));
-		m.getCarreaux().getProprietesAConstruire().get(2).assignAllProprietesAt(m.getJoueurs().getJoueurAt(1));
+		m.getJoueurActuel().setPositionCourante(m.getCarreaux().getProprietesAConstruire().get(2));
+		m.getCarreaux().getProprietesAConstruire().get(2).assignAllProprietesAt(m.getJoueurActuel());
 		break;
 	    case 3:
-		m.getJoueurs().getJoueurAt(0).setPositionCourante(m.getCarreaux().getProprietesAConstruire().get(3));
-		m.getCarreaux().getProprietesAConstruire().get(3).assignAllProprietesAt(m.getJoueurs().getJoueurAt(0));
+		m.getJoueurActuel().setPositionCourante(m.getCarreaux().getProprietesAConstruire().get(3));
+		m.getCarreaux().getProprietesAConstruire().get(3).assignAllProprietesAt(m.getJoueurActuel());
 		m.getCarreaux().getProprietesAConstruire().get(3).setGroupeMaxMaison();
 		break;
 	    default:
